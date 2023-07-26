@@ -1,0 +1,21 @@
+ bool subArrayExists(int arr[], int n)
+    {
+        //Your code here
+        unordered_map<int,int> mp; // create map to store all the sum values at present index;
+        
+        int sum = 0;
+        
+        
+        for(int i = 0; i < n; i++) //we will loop the array to store the frequency of that sum in the map;
+        {
+            sum += arr[i]; //add current element to sum;
+            mp[sum]++; //now if sum is n, then increase the frequency of that key in map by 1;
+            
+            if(sum == 0 || mp[sum]>1) //logic is if sum is zero or if the key repeats itself then this array 
+            {                        //will contain sum = 0; if we have to find sum = k, then mp[sum-k]>1;
+            
+                return true;
+            }
+        }
+        return false;
+    }
