@@ -1,0 +1,42 @@
+int solve(int ind,int w,vector<int> &val,vector<int> &weight,vector<vector<int>> &dp)
+{
+  
+    if(ind == 0)
+    {
+        if( w % weight[ind] == 0) 
+        return val[ind]*(w/weight[0]);
+        else
+        return 0;
+    }
+    if(dp[ind][w] != -1)
+    {
+        return dp[ind][w];
+    }
+    int nopick = 0 + solve(ind-1,w,val,weight,dp);
+    int pick = 0;
+    if(w >= weight[ind]) pick = val[ind] + solve(ind,w-weight[ind],val,weight,dp);
+
+    return dp[ind][w] = max(nopick,pick);
+}
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight){
+    // Write Your Code Here.
+    vector<vector<int>> dp(n,vector<int>(w+1,0));
+   
+    for(int i = 0; i <= w;i++)
+    {
+        dp[0][i] = profit[0]*((int)(i/weight[0]));
+    }
+
+    for(int ind = 1; ind<n;ind++)
+    {
+        for(int we = 0; we <= w; we++)
+        {
+            int nopick = 0 + dp[ind-1][we];
+            int pick = 0;
+            if(we >= weight[ind]) pick = profit[ind] + dp[ind][we-weight[ind]];
+
+            dp[ind][we] = max(nopick,pick);
+        }
+    }
+    return dp[n-1][w];
+}
