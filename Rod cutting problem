@@ -1,0 +1,25 @@
+int solve(int ind,int w,vector<int> &val,vector<vector<int>> &dp)
+{
+  
+    if(ind == 0)
+    {
+        
+        return val[0]*(w);
+        
+    }
+    if(dp[ind][w] != -1)
+    {
+        return dp[ind][w];
+    }
+    int nopick = 0 + solve(ind-1,w,val,dp);
+    int pick = 0;
+    if(w >= (ind+1)) pick = val[ind] + solve(ind,w-(ind+1),val,dp);
+
+    return dp[ind][w] = max(nopick,pick);
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+	vector<vector<int>> dp(n,vector<int> (n+1,-1));
+	return solve(n-1,n,price,dp);
+}
