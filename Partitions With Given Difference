@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+#define mod 1000000007 
+int solve(int idx,int tar,vector<int> &arr,vector<vector<int>> &dp)
+{
+    if(idx == 0)
+    {
+        if(tar == 0 && arr[0] == 0) return 2;
+        if(tar == 0 || arr[0] == tar) return 1;
+        return 0;
+    }
+    if(dp[idx][tar] != -1)
+    {
+        return dp[idx][tar];
+    }
+    int notpick = solve(idx-1,tar,arr,dp);
+    int pick = 0;
+    if(arr[idx] <= tar) pick = solve(idx-1,tar-arr[idx],arr,dp);
+
+    return dp[idx][tar] = (notpick + pick)%mod;
+}
+int countPartitions(int n, int d, vector<int> &arr) {
+    // Write your code here.
+    int sum=0;
+    for(int i = 0; i < n; i++)
+    {
+        sum += arr[i]; 
+    }
+    if((sum-d)%2 || sum-d < 0) return false;
+
+    int s1 = (sum+d)/2;
+    vector<vector<int>> dp(n,vector<int> (s1+1,-1));
+    return solve(n-1,s1,arr,dp);
+
+}
+
+
