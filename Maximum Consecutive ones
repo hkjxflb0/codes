@@ -1,0 +1,22 @@
+Idea - Sliding window problem, take left pointer and right pointer then keep the count of temp==(max 0 can be flipped) if temp <0 them we have extra 0 in our window then check wheather left is 0 or not, if it is then we can 
+reduce then number of zeros by incrementing left as well as temp to 0, if not just skip current 1 and temp remains <0;
+
+int traffic(int n, int m, vector<int> vehicle) {
+    int right=0;
+    int left=0;
+    int temp =m;
+    while(right<n){
+        if(vehicle[right]==0){
+            temp--;
+        }
+        if(temp<0){
+            if(vehicle[left]==0){
+                temp++;            
+
+            }
+            left++;
+        }
+        right++;
+    }
+	return right-left;
+}
